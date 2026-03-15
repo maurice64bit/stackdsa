@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Stack Register</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Student Register - Stack Operations</h1>
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+        <div class="form-section">
+            <h2>Add Student (Push)</h2>
+            <form method="post">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="student_id">Student ID:</label>
+                <input type="text" id="student_id" name="student_id" required>
+                <button type="submit" name="push">Push Student</button>
+            </form>
+        </div>
+        <div class="operations">
+            <h2>Stack Operations</h2>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" name="pop">Pop</button>
+                <button type="submit" name="peek">Peek</button>
+                <button type="submit" name="is_empty">Is Empty</button>
+                <button type="submit" name="size">Size</button>
+            </form>
+        </div>
+        <div class="stack-display">
+            <h2>Current Stack</h2>
+            {% if stack %}
+                <ul>
+                    {% for student in stack reversed %}
+                        <li>{{ student.name }} (ID: {{ student.id }})</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Stack is empty</p>
+            {% endif %}
+        </div>
+        <div class="complexity">
+            <h2>Stack Complexity (ADT)</h2>
+            <p><strong>Space complexity:</strong> {{ space_complexity }}</p>
+            <p><strong>Time complexity:</strong></p>
+            <ul>
+                <li>push: {{ time_complexities.push }}</li>
+                <li>pop: {{ time_complexities.pop }}</li>
+                <li>peek: {{ time_complexities.peek }}</li>
+                <li>is_empty: {{ time_complexities.is_empty }}</li>
+                <li>size: {{ time_complexities.size }}</li>
+            </ul>
+            <div class="complexity-explanation">
+                <h3>Why O(n) space?</h3>
+                <p>
+                    The stack stores each student record in memory. As you add more students,
+                    the number of stored records grows linearly, so the total memory used
+                    increases proportionally to the number of students (n).
+                </p>
+                <p>
+                    The operations (push/pop/peek/is_empty/size) only access or modify the
+                    top of the stack (or a count), so they run in constant time.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
