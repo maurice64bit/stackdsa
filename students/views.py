@@ -38,7 +38,7 @@ def index(request):
 
     return render(
         request,
-        'students/index.html',
+        'index.html',
         {
             'stack': stack.to_list(),
             'message': message,
